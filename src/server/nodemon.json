@@ -1,0 +1,6 @@
+{
+    "env": {
+        "MONGO_ATLAS_PW": "car-auction",
+        "JWT_KEY": "secret"
+    }
+}
