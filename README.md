@@ -1,9 +1,23 @@
 # shoppingcart
 
+## Stack
+
 Stack: node + react/redux-ducks/mongo (mlab)
 
-Install: npm i
-Run: npm run webpack to create the bundle
-npm start to run the server
+## Getting Started
 
-Enjoy
+```
+npm i
+```
+## Run
+create the bundle
+```
+npm run webpack
+```
+
+start server
+```
+npm start
+```
+
+#enjoy
