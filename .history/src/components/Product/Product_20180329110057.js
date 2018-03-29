@@ -51,6 +51,7 @@ class Product extends Component {
                     <CardBody>
                     <CardTitle>{name}</CardTitle>
                     <CardSubtitle>{price} {currency}</CardSubtitle>
+                    <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
                     <Button className={isInCart ? 'btn btn-danger' : 'btn btn-primary'}
                             onClick={this.handleClick}>{isInCart ? 'Remove' : 'Add to cart'}</Button>
                     </CardBody>

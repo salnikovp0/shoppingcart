@@ -45,12 +45,13 @@ class Product extends Component {
         const { name, price, currency, image, isInCart, canAdd } = this.props;
 
         return (
-            <div>
+            <div className="product thumbnail">
                 <Card>
                     <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                     <CardBody>
                     <CardTitle>{name}</CardTitle>
                     <CardSubtitle>{price} {currency}</CardSubtitle>
+                    <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
                     <Button className={isInCart ? 'btn btn-danger' : 'btn btn-primary'}
                             onClick={this.handleClick}>{isInCart ? 'Remove' : 'Add to cart'}</Button>
                     </CardBody>

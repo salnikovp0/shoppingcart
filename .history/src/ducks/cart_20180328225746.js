@@ -77,7 +77,9 @@ export function sendEmail(email, items) {
 }
 
 export function clearCart() {
-    return (dispatch) => dispatch({ type: CART_CLEAR })
+    return (dispatch) => ({
+        type: CART_CLEAR
+    })
 }
 
 // selectors

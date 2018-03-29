@@ -29,17 +29,16 @@ class Status extends Component {
         return (
             <div>
                 <ListGroup>
-                    <h3>Top:</h3>
+                    Top:
                     {top && top.map(prod => (
                         <ListGroupItem key={prod._id}>{prod.name}</ListGroupItem>
                     ))}
                 </ListGroup>
-                <p />
-                <p />
+
                 <ListGroup>
-                    <h3>Most:</h3>
+                    Most:
                     {most && most.map(prod => (
-                        <ListGroupItem key={prod}>{prod}</ListGroupItem>
+                        <ListGroupItem key={prod._id}>{prod.name}</ListGroupItem>
                     ))}
                 </ListGroup>
             </div>

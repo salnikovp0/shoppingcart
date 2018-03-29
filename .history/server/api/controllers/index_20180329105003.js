@@ -80,7 +80,8 @@ exports.products_get_most = (req, res, next) => {
       // got most in payments
       most3 = duplicates
         .sort((a, b) => a.count - b.count)
-        .map(products => products.set)[0];
+        .slice(0, 3)
+        .map(products => products.set);
       
       res.status(200).json(most3);
     })

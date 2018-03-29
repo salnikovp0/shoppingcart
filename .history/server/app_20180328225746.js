@@ -14,7 +14,7 @@ let uri = 'ds123399.mlab.com:23399';
 let db = 'shoppingcart'
 
 mongoose.connect(
-  `mongodb://${user}:${pass}@${uri}/${db}`,  function (err, db) {
+  `mongodb://${user}:${pass}@${uri}/${db}?useMongoClient=true`,  function (err, db) {
     if (err) {
       console.log('Unable to connect to the server. Please start the server. Error:', err);
     } else {

@@ -45,7 +45,7 @@ class ProductList extends Component {
                 </ul>
     
                 {this.props.cartItems.length > 0 && <Link to="/cart">
-                    <Button color="success">
+                    <Button>
                         Go to cart
                     </Button> 
                 </Link>}

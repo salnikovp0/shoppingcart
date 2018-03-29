@@ -4,20 +4,6 @@ const Payment = require('../models/payment');
 const Product = require('../models/product');
 const Top = require('../models/Top');
 
-
-// Helpers
-const arrayCompare = f => ([x,...xs]) => ([y,...ys]) =>
-  x === undefined && y === undefined
-    ? true
-    : Boolean (f (x) (y)) && arrayCompare (f) (xs) (ys)
-
-const equal = x => y =>
-  x === y 
-
-const arrayEqual =
-  arrayCompare (equal)
-
-
 exports.products_get_all = (req, res, next) => {
   Product.find({})
     .exec()
@@ -48,20 +34,19 @@ exports.products_get_top = (req, res, next) => {
 
 exports.products_get_most = (req, res, next) => {
   Payment.find({})
-    .populate('products')
     .exec()
-    .then((payments) => {
+    .then(({ payments }) => {
       let subsets = [];
       let duplicates = [];
       let most3 = [];
 
       // create subsets
       for ({products} of payments) {
-        if(products && products.length >= 3) {
-          let ids = products.map(product => product.toJSON().name);
+        if(products.length >= 3) {
+          let ids = products.map(p => p._id);
           let subset = k_combinations(ids, 3);
 
-          subsets = [...subsets, ...subset];
+          subsets.push(...subset);
         }
       }
 
@@ -77,10 +62,7 @@ exports.products_get_most = (req, res, next) => {
         }
       }
 
-      // got most in payments
-      most3 = duplicates
-        .sort((a, b) => a.count - b.count)
-        .map(products => products.set)[0];
+      most3 = duplicates.sort((a, b) => a.count - b.count).slice(0, 3);
       
       res.status(200).json(most3);
     })
@@ -110,8 +92,6 @@ exports.payment_create = (req, res, next) => {
   Product.find({ _id: { $in: req.body.ids } })
     .exec()
     .then(products => {
-      // let convertedProducts = products.map(product => product.toJSON());
-
       const _payment = new Payment({
         _id: mongoose.Types.ObjectId(),
         products,
@@ -188,4 +168,17 @@ function k_combinations(set, k) {
 		}
 	}
 	return combs;
+}
+
+
+function arrayCompare(f) {
+  return ([x,...xs]) => ([y,...ys]) =>
+  x === undefined && y === undefined
+    ? true
+    : Boolean (f (x) (y)) && arrayCompare (f) (xs) (ys)
+}
+
+function equal(x) {
+  return y =>
+  x === y // notice: triple equal
 }

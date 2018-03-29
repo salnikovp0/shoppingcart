@@ -4,20 +4,6 @@ const Payment = require('../models/payment');
 const Product = require('../models/product');
 const Top = require('../models/Top');
 
-
-// Helpers
-const arrayCompare = f => ([x,...xs]) => ([y,...ys]) =>
-  x === undefined && y === undefined
-    ? true
-    : Boolean (f (x) (y)) && arrayCompare (f) (xs) (ys)
-
-const equal = x => y =>
-  x === y 
-
-const arrayEqual =
-  arrayCompare (equal)
-
-
 exports.products_get_all = (req, res, next) => {
   Product.find({})
     .exec()
@@ -47,40 +33,14 @@ exports.products_get_top = (req, res, next) => {
 };
 
 exports.products_get_most = (req, res, next) => {
+  let test = k_combinations([1,2,3,4,5]);
+
   Payment.find({})
-    .populate('products')
     .exec()
-    .then((payments) => {
-      let subsets = [];
-      let duplicates = [];
-      let most3 = [];
-
-      // create subsets
-      for ({products} of payments) {
-        if(products && products.length >= 3) {
-          let ids = products.map(product => product.toJSON().name);
-          let subset = k_combinations(ids, 3);
-
-          subsets = [...subsets, ...subset];
-        }
-      }
-
-      // calculate all subsets duplicates
-      for (set of subsets) {
-        let findSubsets = subsets.filter(s => arrayEqual(set)(s));
-        let didExists = duplicates.find(s => arrayEqual(set)(s.set));
-        if(findSubsets.length && !didExists ) {
-          duplicates.push({
-            set: set,
-            count: findSubsets.length
-          })
-        }
-      }
-
-      // got most in payments
-      most3 = duplicates
-        .sort((a, b) => a.count - b.count)
-        .map(products => products.set)[0];
+    .then(({ products }) => {
+      let most3 = !products
+        ? []
+        : products.sort((a, b) => a.count - b.count).slice(0, 3);
       
       res.status(200).json(most3);
     })
@@ -110,8 +70,6 @@ exports.payment_create = (req, res, next) => {
   Product.find({ _id: { $in: req.body.ids } })
     .exec()
     .then(products => {
-      // let convertedProducts = products.map(product => product.toJSON());
-
       const _payment = new Payment({
         _id: mongoose.Types.ObjectId(),
         products,
@@ -133,8 +91,9 @@ exports.payment_create = (req, res, next) => {
     });
 };
 
-function k_combinations(set, k) {
-	var i, j, combs, head, tailcombs;
+function k_combinations(set) {
+  let k = 3;
+	let i, j, combs, head, tailcombs;
 	
 	// There is no way to take e.g. sets of 5 elements from
 	// a set of 4.

@@ -10,7 +10,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = {
     sendEmail: sendEmail,
-    clearCart: clearCart
+    clearCart: () => clearCart()
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

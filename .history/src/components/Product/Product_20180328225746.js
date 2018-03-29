@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter,
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class Product extends Component {
     constructor(props){
@@ -45,16 +43,19 @@ class Product extends Component {
         const { name, price, currency, image, isInCart, canAdd } = this.props;
 
         return (
-            <div>
-                <Card>
-                    <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-                    <CardBody>
-                    <CardTitle>{name}</CardTitle>
-                    <CardSubtitle>{price} {currency}</CardSubtitle>
-                    <Button className={isInCart ? 'btn btn-danger' : 'btn btn-primary'}
-                            onClick={this.handleClick}>{isInCart ? 'Remove' : 'Add to cart'}</Button>
-                    </CardBody>
-                </Card>
+            <div className="product thumbnail">
+                <div className="caption">
+                    <h3>{name}</h3>
+                    <div className="product__price">{price} {currency}</div>
+                    <div className="product__button-wrap">
+                        <button
+                            className={isInCart ? 'btn btn-danger' : 'btn btn-primary'}
+                            onClick={this.handleClick}
+                        >
+                            {isInCart ? 'Remove' : 'Add to cart'}
+                        </button>
+                    </div>
+                </div>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader>Attention</ModalHeader>

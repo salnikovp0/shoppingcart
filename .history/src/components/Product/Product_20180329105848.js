@@ -46,26 +46,17 @@ class Product extends Component {
 
         return (
             <div>
-                <Card>
-                    <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-                    <CardBody>
-                    <CardTitle>{name}</CardTitle>
-                    <CardSubtitle>{price} {currency}</CardSubtitle>
-                    <Button className={isInCart ? 'btn btn-danger' : 'btn btn-primary'}
-                            onClick={this.handleClick}>{isInCart ? 'Remove' : 'Add to cart'}</Button>
-                    </CardBody>
-                </Card>
-
-                <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                    <ModalHeader>Attention</ModalHeader>
-                    <ModalBody>
-                        The Cart is full, maximum aloud is 5 products
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="primary" onClick={this.toggle}>Close</Button>{' '}
-                    </ModalFooter>
-                </Modal>
+            <Card>
+                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                <CardBody>
+                <CardTitle>Card title</CardTitle>
+                <CardSubtitle>Card subtitle</CardSubtitle>
+                <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                <Button>Button</Button>
+                </CardBody>
+            </Card>
             </div>
+
         );
     }
 }
